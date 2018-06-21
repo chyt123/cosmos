@@ -2,7 +2,7 @@ import sys
 
 
 def cham_tower(poured, query_glass, query_row):
-    g = [[0 for i in range(100)] for i in range(100)]
+    g = [[0 for i in range(101)] for i in range(101)]
     g[0][0] = poured
 
     for i in range(0, query_row + 1):
