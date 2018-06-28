@@ -56,7 +56,6 @@ public class PathSourceToTarget {
   public static List<List<Integer>> allPathsSourceTarget2(int[][] graph) {
     List<List<Integer>> result = new LinkedList<>();
     LinkedList<Integer> path = new LinkedList<>();
-    Stack<List<Integer>> stack = new Stack<>();
     path.add(0);
     a(0, path, result, graph);
     return result;
