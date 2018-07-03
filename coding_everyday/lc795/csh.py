@@ -2,19 +2,21 @@ class Solution(object):
     def numSubarrayBoundedMax(self, A, L, R):
         d = [0]
         rst = 0
-        flag = -1
+        lflag = -1
+        rflag = -1
         for i, num in enumerate(A):
-            if L <= num and i <= num:
-                d.append(d[i] + i - flag)
-                rst = d[-1]
+            if L <= num <= R:
+                d.append(d[i] + i - lflag)
+                rflag = i
             elif num < L:
-                d.append(d[i] + i)
-                rst = d[-1]
+                d.append(d[i] + max(0, rflag - lflag))
             elif num > R:
                 d.append(0)
-                flag = i
-            print d
+                lflag = i
+                rst += d[i]
+        rst += d[-1]
         return rst
+
 
 if __name__ == "__main__":
     sol = Solution()
