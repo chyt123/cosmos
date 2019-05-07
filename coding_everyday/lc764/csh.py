@@ -1,11 +1,13 @@
 import collections
 class Solution(object):
     def orderOfLargestPlusSign(self, N, mines):
-        mine_row = [list() for _ in range(500)]
-        mine_col = [list() for _ in range(500)]
+        mine_row = [list() for _ in range(N)]
+        mine_col = [list() for _ in range(N)]
         for mine in mines:
             mine_row[mine[0]].append(mine[1])
             mine_col[mine[1]].append(mine[0])
+        print mine_row
+        print mine_col
         mx = 0
         for i in range(N):
             for j in range(N):
