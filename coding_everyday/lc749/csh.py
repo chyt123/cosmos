@@ -8,6 +8,7 @@ class Solution(object):
             visited = [[False for _ in xrange(len(grid[0]))] for _ in xrange(len(grid))]
             regions = list()
             perimeters = list()
+            infects = list()
             dq = deque()
             return_flag = True
             for i in xrange(len(grid)):
@@ -19,6 +20,8 @@ class Solution(object):
                         visited[i][j] = True
                         tmp = list()
                         p = 0
+                        infect = 0
+                        infects_visited = [[False for _ in xrange(len(grid[0]))] for _ in xrange(len(grid))]
                         while dq:
                             (x, y) = dq.popleft()
                             if x + 1 < len(grid) and grid[x + 1][y] == 1 and not visited[x + 1][y]:
@@ -30,24 +33,37 @@ class Solution(object):
                             if y + 1 < len(grid[0]) and grid[x][y + 1] == 1 and not visited[x][y + 1]:
                                 dq.append((x, y + 1))
                                 visited[x][y + 1] = True
-                            if y - 1 >= 0 and grid[x][y - 1] == 1and not visited[x][y - 1]:
+                            if y - 1 >= 0 and grid[x][y - 1] == 1 and not visited[x][y - 1]:
                                 dq.append((x, y - 1))
                                 visited[x][y - 1] = True
                             tmp.append((x, y))
                             if x + 1 < len(grid) and not grid[x + 1][y]:
+                                if not infects_visited[x + 1][y]:
+                                    infect += 1
+                                    infects_visited[x + 1][y] = True
                                 p += 1
                             if x - 1 >= 0 and not grid[x - 1][y]:
+                                if not infects_visited[x - 1][y]:
+                                    infect += 1
+                                    infects_visited[x - 1][y] = True
                                 p += 1
                             if y + 1 < len(grid[0]) and not grid[x][y + 1]:
+                                if not infects_visited[x][y + 1]:
+                                    infect += 1
+                                    infects_visited[x][y + 1] = True
                                 p += 1
                             if y - 1 >= 0 and not grid[x][y - 1]:
+                                if not infects_visited[x][y - 1]:
+                                    infect += 1
+                                    infects_visited[x][y - 1] = True
                                 p += 1
-
                         regions.append(tmp)
                         perimeters.append(p)
+                        infects.append(infect)
+
             if return_flag:
                 return rst
-            curr_idx = perimeters.index(max(perimeters))
+            curr_idx = infects.index(max(infects))
             rst += perimeters.pop(curr_idx)
             clean = regions.pop(curr_idx)
             for (x, y) in clean:
@@ -63,10 +79,6 @@ class Solution(object):
                         grid[x][y + 1] = 1
                     if y - 1 >= 0 and not grid[x][y - 1]:
                         grid[x][y - 1] = 1
-
-            for row in grid:
-                print row
-            print
 
 
 if __name__ == "__main__":
