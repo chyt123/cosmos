@@ -9,7 +9,6 @@ class TreeNode:
 class Solution:
     def pruneTree(self, root: TreeNode) -> TreeNode:
         self.back(root)
-
         if root.val == 0 and root.left is None and root.right is None:
             return None
         return root
