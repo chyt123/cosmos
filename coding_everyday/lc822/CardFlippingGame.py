@@ -16,5 +16,3 @@ if __name__ == "__main__":
     fronts = [1,2,4,4,7]
     backs = [1,3,4,1,3]
     print(sol.flipgame(fronts, backs))
-
-        
