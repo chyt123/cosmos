@@ -1,4 +1,5 @@
 from typing import List
+from collections import deque
 
 
 class TreeNode:
@@ -6,6 +7,18 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
+
+def lc_tree2list(tree: TreeNode) -> List:
+    q = deque()
+    q.append(tree)
+    ans = []
+    while q:
+        cur = q.popleft()
+        if cur:
+            ans.append(cur.val)
+            q.extend([cur.left, cur.right])
+    return ans
 
 
 def lc_list2tree(a: List) -> TreeNode:
