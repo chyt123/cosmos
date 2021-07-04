@@ -3,21 +3,33 @@ from typing import List
 
 
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        d = collections.defaultdict()
-
-        for idx, i in enumerate(nums):
-            if target - i in d:
-                return [d[target - i], idx]
-            d[i] = idx
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+        if n <= 1:
+            return n
+        set_s = set()
+        l, r = 0, 0
+        set_s.add(s[l])
+        maxx = 0
+        while r < n - 1:
+            if s[r + 1] in set_s:  # move window
+                set_s.remove(s[l])
+                l += 1
+            else:  # expand
+                r += 1
+                set_s.add(s[r])
+            maxx = max(maxx, r - l + 1)
+        return maxx
 
 
 if __name__ == "__main__":
     sol = Solution()
     test_cases = [
-        [[2, 7, 11, 15], 9],
-        [[3, 2, 4], 6],
-        [[3, 3], 6],
+        "dvdf",
+        "abcabcbb",
+        "bbbbb",
+        "pwwkew",
+        ""
     ]
-    for i, j in test_cases:
-        print(sol.twoSum(i, j))
+    for i in test_cases:
+        print(sol.lengthOfLongestSubstring(i))

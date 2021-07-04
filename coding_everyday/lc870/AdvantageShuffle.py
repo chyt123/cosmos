@@ -5,22 +5,38 @@ from collections import deque, defaultdict, OrderedDict
 
 class Solution:
     def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        nums1.sort()
-        sorted2 = sorted(nums2)
-        assigned = {
-            b: [] for b in nums2
-        }
-        wait = []
-        pt = 0
-        while nums1:
-            cur = nums1.pop(0)
-            if cur > sorted2[pt]:
-                assigned[sorted2[pt]].append(cur)
-                pt += 1
+        nums2_with_idx = [(i, idx) for idx, i in enumerate(nums2)]
+        nums2_with_idx.sort()
+        nums1.sort(reverse=True)
+        ans = [0 for _ in nums1]
+        pt = -1
+        for i in nums1:
+            idx = bisect.bisect_left(nums2_with_idx, (i, 0))
+            if 0 < idx:
+                ans[nums2_with_idx[idx - 1][1]] = i
+                nums2_with_idx.pop(idx - 1)
             else:
-                wait.append(cur)
-        ans = [assigned[b].pop() if assigned[b] else wait.pop() for b in nums2]
+                ans[nums2_with_idx[pt][1]] = i
+                pt -= 1
         return ans
+
+        # nums1.sort()
+        # sorted2 = sorted(nums2)
+        # assigned = {
+        #     b: [] for b in nums2
+        # }
+        # wait = []
+        # pt = 0
+        # while nums1:
+        #     cur = nums1.pop(0)
+        #     if cur > sorted2[pt]:
+        #         assigned[sorted2[pt]].append(cur)
+        #         pt += 1
+        #     else:
+        #         wait.append(cur)
+        # ans = [assigned[b].pop() if assigned[b] else wait.pop() for b in nums2]
+        # return ans
+
         # ans = [-1] * len(nums1)
         # wait = []
         # nums1.sort()
