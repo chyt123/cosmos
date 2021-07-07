@@ -58,9 +58,19 @@ class ListNode:
 
 
 def lc_list2singlelinkedlist(l: List) -> ListNode:
+    if not l:
+        return None
     ret = ListNode(l[0])
     cur = ret
     for i in range(1, len(l)):
         cur.next = ListNode(l[i])
         cur = cur.next
     return ret
+
+
+def lc_singlelinkedlist2list(node: ListNode) -> List:
+    ans = []
+    while node:
+        ans.append(node.val)
+        node = node.next
+    return ans
