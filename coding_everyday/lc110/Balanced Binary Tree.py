@@ -1,5 +1,7 @@
+import collections
+import math
 from typing import List
-from collections import deque
+from collections import defaultdict, deque
 
 
 class TreeNode:
@@ -10,21 +12,15 @@ class TreeNode:
 
 
 def lc_tree2list(tree: TreeNode) -> List:
-    q = deque([tree])
+    q = deque()
+    q.append(tree)
     ans = []
     while q:
         cur = q.popleft()
         if cur:
             ans.append(cur.val)
             q.extend([cur.left, cur.right])
-        else:
-            ans.append(None)
-    idx = len(ans) - 1
-    for i in range(idx, -1, -1):
-        if ans[i] is not None:
-            idx = i
-            break
-    return ans[:idx + 1]
+    return ans
 
 
 def lc_list2tree(a: List) -> TreeNode:
@@ -58,27 +54,29 @@ def lc_list2tree(a: List) -> TreeNode:
     return ret
 
 
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        def helper(node):
+            if not node:
+                return 0
+            if not node.left and not node.right:
+                return 1
+            left = helper(node.left)
+            right = helper(node.right)
+            if abs(left - right) > 1:
+                return math.inf
+            return max(left, right) + 1
+        return helper(root) != math.inf
 
 
-def lc_list2singlelinkedlist(l: List) -> ListNode:
-    if not l:
-        return None
-    ret = ListNode(l[0])
-    cur = ret
-    for i in range(1, len(l)):
-        cur.next = ListNode(l[i])
-        cur = cur.next
-    return ret
-
-
-def lc_singlelinkedlist2list(node: ListNode) -> List:
-    ans = []
-    while node:
-        ans.append(node.val)
-        node = node.next
-    return ans
+if __name__ == "__main__":
+    sol = Solution()
+    test_cases = [
+        [3, 9, 20, None, None, 15, 7],
+        [1, 2, 2, 3, 3, None, None, 4, 4],
+        [1, None, 2],
+        [],
+        [1],
+    ]
+    for i in test_cases:
+        print(sol.isBalanced(lc_list2tree(i)))
