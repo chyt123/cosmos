@@ -43,17 +43,21 @@ def lc_list2tree(a: List) -> TreeNode:
         for i in range(lim // 2):
             if not a:
                 break
-            left = a.pop(0)
+            left = a[0]
             right = None
-            if a:
-                right = a.pop(0)
+            if len(a) > 1:
+                right = a[1]
 
             if wait_list:
                 cur_p = wait_list.pop(0)
-                cur_p.left = TreeNode(left) if left else None
-                cur_p.right = TreeNode(right) if right else None
-                wait_list.append(cur_p.left)
-                wait_list.append(cur_p.right)
+                if cur_p:
+                    cur_p.left = TreeNode(left) if left is not None else None
+                    cur_p.right = TreeNode(right) if right is not None else None
+                    a.pop(0)
+                    if a:
+                        a.pop(0)
+                    wait_list.append(cur_p.left)
+                    wait_list.append(cur_p.right)
         l += 1
     return ret
 
