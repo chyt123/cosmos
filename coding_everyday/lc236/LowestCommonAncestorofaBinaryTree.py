@@ -11,19 +11,19 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         self.ans = root
 
-        def mot(root_node: 'TreeNode', p, q):
+        def inorder(root_node: 'TreeNode', p, q):
             l, r, m = 0, 0, 0
             if root_node.val in [p.val, q.val]:
                 m = 1
             if root_node.left:
-                l = mot(root_node.left, p, q)
+                l = inorder(root_node.left, p, q)
             if root_node.right:
-                r = mot(root_node.right, p, q)
+                r = inorder(root_node.right, p, q)
             if l + r + m >= 2:
                 self.ans = root_node
             return 1 if l + r + m > 0 else 0
 
-        mot(root, p, q)
+        inorder(root, p, q)
         return self.ans
 
 
