@@ -33,7 +33,6 @@ class Solution:
         return root
 
 
-
 if __name__ == "__main__":
     sol = Solution()
     # test_cases = [
