@@ -16,6 +16,9 @@ public class TreeNode {
          if (inputList.isEmpty()) {
              return null;
          }
+         if (inputList.size() == 1) {
+             return new TreeNode(inputList.get(0));
+         }
 
          ArrayList<TreeNode> treeNodes = new ArrayList<>();
          for (Integer i : inputList) {
